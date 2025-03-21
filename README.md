@@ -3,13 +3,16 @@
 </h1>
 
 <p align="center">
+  <a href="https://www.python.org/downloads/release/python-2718/">
+    <img src="https://img.shields.io/badge/Python-2.7.18-green" alt="Python 2.7.18">
+  </a>
   <a href="https://www.python.org/downloads/release/python-31012/">
     <img src="https://img.shields.io/badge/Python-3.10.12-blue" alt="Python 3.10.12">
   </a>
 </p>
 
 
-# **Q-Learning**
+# **Q-Learning [Python 2.7.18]**
 
 
 ### **QLearningAgent Class**
@@ -105,5 +108,74 @@ def getValue(self, state):
 - `getValue` returns the value of the state (the maximum Q-value for that state).
 
 
-# Car Game
+## **Visualization**
 
+#### GridWorld
+
+![GridWorld Q-Learning](assets/Q-Learning.png)
+
+#### Pacman
+
+![Pacman](assets/Pacman.png)
+
+
+# **Car Game [Python 3.10.12 | PyTorch 2.3 | [YouTube](https://youtu.be/01dkrN3CZL4)]**
+
+## **City Map**
+
+![City Map](<Car Game/images/citymap.png>)
+
+## **Mask**
+
+![Mask](<Car Game/images/mask-1.png>)
+
+
+### **Network Class**
+
+- Adding 1 more Linear layer
+
+```python
+# Creating the architecture of the Neural Network
+class Network(nn.Module):
+    
+    def __init__(self, input_size, nb_action):
+        super(Network, self).__init__()
+        self.input_size = input_size
+        self.nb_action = nb_action
+        self.fc1 = nn.Linear(input_size, 30)
+        self.fc2 = nn.Linear(30, 10)
+        self.fc3 = nn.Linear(10, nb_action)
+    
+    def forward(self, state):
+        x = F.relu(self.fc1(state))
+        x = F.relu(self.fc2(x))
+        q_values = self.fc3(x)
+        return q_values
+```
+
+- Alternate Goals to reach
+
+```python
+# Alternate between goals A1, A2, and A3
+if distance < 25:
+    if swap == 0:
+        goal_x, goal_y = 1381, 622  # Goal A1
+        swap = 1
+    elif swap == 1:
+        goal_x, goal_y = 288, 724  # Goal A2
+        swap = 2
+    else:
+        goal_x, goal_y = 82, 70  # Goal A3
+        swap = 0
+```
+
+
+## **Visualization**
+
+#### Goal A1
+
+![Goal A1](<assets/Goal A1.png>)
+
+#### Goal A3
+
+![Goal A3](<assets/Goal A3.png>)
